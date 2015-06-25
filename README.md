@@ -16,7 +16,7 @@ The input data needed for the parameterization include
    - imaginary part of ice refractive index
    - size parameter defined with respect to the snow grain volume-to-projected area equivalent radius
    
- For more information, please see this publication: 
+For more information, please see this publication: 
    
   P. Räisänen, A. Kokhanovsky, G. Guyot, O. Jourdan and T. Nousiainen, 2015:
   Parameterization of single-scattering properties of snow, The Cryosphere, 
