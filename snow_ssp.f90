@@ -3,11 +3,25 @@ PROGRAM snow_ssp
 ! This Fortran program demonstrates the use of the snow single-scattering
 ! property parameterization documented in
 !
-! P. Räisänen, A. Kokhanovsky, G. Guyot, O. Jourdan and T. Nousiainen:
-! Parameterization of single-scattering properties of snow.
-! The Cryosphere Discuss., 9, 2015.
+! P. Räisänen, A. Kokhanovsky, G. Guyot, O. Jourdan and T. Nousiainen, 2015:
+! Parameterization of single-scattering properties of snow, The Cryosphere, 
+! 9, 1277-1301, doi:10.5194/tc-9-1277-2015.
 !
-! Please consult this paper for more information.
+! The parameterization can be applied to compute the following single-
+! scattering properties of snow in the wavelength range 0.199-2.7 µm:
+!  - qext = extinction efficiency (assumed to be exactly 2)
+!  - coalb = single-scattering co-albedo = 1 - single-scattering albedo
+!  - g = asymmetry parameter
+!  - p11 = scattering phase function
+!
+! The input data needed for the parameterization include 
+!  - refre = real part of ice refractive index
+!  - refim = imaginary part of ice refractive index
+!  - sizep = size parameter defined with respect to the snow-grain
+!            volume-to-projected area equivalent radius
+!
+! Please consult the above paper for more information, and please cite it,
+! should you apply the parameterization in any publication.
 !
 ! The program SHould work with any Fortran90 or Fortran95 compiler.
 !
