@@ -10,8 +10,13 @@ This repository contains the following files:
    - single-scattering co-albedo = 1 - single-scattering albedo
    - asymmetry parameter
    - scattering phase function
-  
-  For more information, please see this publication: 
+
+The input data needed for the parameterization include 
+   - real part of ice refractive index
+   - imaginary part of ice refractive index
+   - size parameter defined with respect to the snow grain volume-to-projected area equivalent radius
+   
+ For more information, please see this publication: 
    
   P. Räisänen, A. Kokhanovsky, G. Guyot, O. Jourdan and T. Nousiainen, 2015:
   Parameterization of single-scattering properties of snow, The Cryosphere, 
