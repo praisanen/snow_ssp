@@ -21,9 +21,15 @@ For more information, please see this publication:
   P. Räisänen, A. Kokhanovsky, G. Guyot, O. Jourdan and T. Nousiainen, 2015:
   Parameterization of single-scattering properties of snow, The Cryosphere, 
   9, 1277-1301, doi:10.5194/tc-9-1277-2015.
-  
-2) gpl.txt 
+ 
+2) files_for_NorESM_or_CESM 
+ 
+= Directory containing files that may be used for testing the impact of snow grain nonsphericity in
+  the NorESM and CESM earth system models (or any model using the SNICAR scheme for snow on land 
+  (a part of the CLM land-surface model) and the CICE4 sea ice model)
+ 
+3) gpl.txt 
 = Gnu General Public License, version 3
 
-3) README.md
+4) README.md
 = this file
