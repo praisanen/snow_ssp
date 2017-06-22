@@ -37,7 +37,7 @@ A.3) snicar_optics_5bnd_OHC_PRaisanen.nc
 In this version, the optical properties of snow grains are based on
 the "Optimized habit combination" (a mixture of three non-spherical shapes)
 introduced in Räisänen et al. (2015), with spectral averaging handled
-as explained in the Appendis of Räisänen et al. (2017). The aerosol optical 
+as explained in the Appendix of Räisänen et al. (2017). The aerosol optical 
 properties are unchanged.
 
 *******************************************
