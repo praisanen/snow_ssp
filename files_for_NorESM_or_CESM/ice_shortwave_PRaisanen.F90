@@ -45,6 +45,27 @@
 ! 2007, ECH: Improved efficiency
 ! 2008, BPB: Added aerosols to Delta Eddington code
 !
+! 2016: P. Räisänen:
+!
+! Option to use non-spherical snow grains, depending on the compiler directive 
+! NONSPH_SNOW, see subroutine "compute_dEdd". 
+!
+! The single-scattering properties of non-spherical snow grains are based on the
+! "Optimized habit combination" (OHC) as described in
+!
+! Räisänen, P., Kokhanovsky, A., Guyot, G., Jourdan, O. and Nousiainen, T., 
+! 2015: Parameterization of single-scattering properties of snow,
+!  The Cryosphere, 9, 1277--1301, doi:10.5194/tc-9-1277-2015.
+!
+! When not using the directive NONSPH_SNOW, spherical snow grains are
+! assumed, but also their single-scattering properties have been revised 
+! slightly, as explained in the Appendix of
+!
+!   Räisänen, P., Makkonen. R., Kirkevåg, A. and Debernard, J. B., 2017:
+!   Effect of snow-grain shape on climate simulations: Sensitivity tests
+!   with the Norwegian Earth System Model (The Cryosphere Discussions, 
+!   submitted)
+!
 ! !INTERFACE:
 !
       module ice_shortwave
@@ -1222,19 +1243,6 @@
       type (block) :: &
          this_block      ! block information for current block
 
-! Added an option to use nonspherical snow grains, depending on whether
-! the compiler directive "NONSPH_SNOW" is used 
-! (P. Räisänen, FMI, 11 Dec 2015)
-
-      LOGICAL :: lnonsph_snow
-
-#ifdef NONSPH_SNOW      
-      lnonsph_snow=.TRUE.  
-#else
-      lnonsph_snow=.FALSE.
-#endif
-!
-
       exp_min = exp(-c10)
 
       do iblk=1,nblocks
@@ -1325,9 +1333,6 @@
                               trcrn(:,:,:,n,iblk),tarea(:,:,iblk),    &
                               swvdr(:,:,  iblk), swvdf(:,:,  iblk),   &
                               swidr(:,:,  iblk), swidf(:,:,  iblk),   &
-! PR (11 Dec 2015)
-                              lnonsph_snow,                           &
-!
                               dalvdrn_noaero(:,:,n,iblk),              &
                               dalvdfn_noaero(:,:,n,iblk),              &
                               dalidrn_noaero(:,:,n,iblk),              &
@@ -1382,9 +1387,6 @@
                               trcrn(:,:,:,n,iblk),tarea(:,:,iblk),    &
                               swvdr(:,:,  iblk), swvdf(:,:,  iblk),   &
                               swidr(:,:,  iblk), swidf(:,:,  iblk),   &
-! PR (11 Dec 2015)
-                              lnonsph_snow,                           &
-!
                               dalvdrn_nopond(:,:,n,iblk),              &
                               dalvdfn_nopond(:,:,n,iblk),              &
                               dalidrn_nopond(:,:,n,iblk),              &
@@ -1404,8 +1406,6 @@
             endif
 #endif
 
-!
-
             call shortwave_dEdd(nx_block,        ny_block,            &
                               icells,                                 &
                               indxi,             indxj,               &
@@ -1417,9 +1417,6 @@
                               trcrn(:,:,:,n,iblk),tarea(:,:,iblk),    &
                               swvdr(:,:,  iblk), swvdf(:,:,  iblk),   &
                               swidr(:,:,  iblk), swidf(:,:,  iblk),   &
-! PR (11 Dec 2015)
-                              lnonsph_snow,                           &
-!
                               alvdrn(:,:,n,iblk),alvdfn(:,:,n,iblk),  &
                               alidrn(:,:,n,iblk),alidfn(:,:,n,iblk),  &
                               fswsfcn(:,:,n,iblk),fswintn(:,:,n,iblk),&
@@ -1493,8 +1490,6 @@
                                   trcr,     tarea,       &
                                   swvdr,    swvdf,       &
                                   swidr,    swidf,       &
-! Add an option to use non-spherical snow grains (PR 11 Dec 2015)
-                                  lnonspherical,         &
                                   alvdr,    alvdf,       &
                                   alidr,    alidf,       &
                                   fswsfc,   fswint,      &
@@ -1581,9 +1576,6 @@
          swvdf   , & ! sw down, visible, diffuse (W/m^2)
          swidr   , & ! sw down, near IR, direct  (W/m^2)
          swidf       ! sw down, near IR, diffuse (W/m^2)
-
-! Add an option to use non-spherical snow grains (PR 11 Dec 2015)
-      logical, intent(in) :: lnonspherical
 
       real (kind=dbl_kind), dimension (nx_block,ny_block), &
          intent(out) :: &
@@ -1756,12 +1748,7 @@
              icells_DE, indxi_DE, indxj_DE, fnidr, coszen, &
              swvdr,     swvdf,    swidr,    swidf, srftyp, &
              hs,        rhosnw,   rsnw,     hi,    hp,     &
-!            fi,       aero_mp,                            &
-! PR (11 Dec 2015)
-! Add an option to use nonspherical snow grains 
-! (although this should not matter for bare sea ice)
-             fi,       aero_mp,   lnonspherical,           &
-                                  avdrl,    avdfl,         &
+             fi,       aero_mp,   avdrl,    avdfl,         &
                                   aidrl,    aidfl,         &
                                   fswsfc,   fswint,        &
                                   fswthru,  Sswabs(:,:,:), &
@@ -1812,11 +1799,7 @@
              icells_DE, indxi_DE, indxj_DE, fnidr, coszen, &
              swvdr,     swvdf,    swidr,    swidf, srftyp, &
              hs,        rhosnw,   rsnw,     hi,    hp,     &
-!            fs,       aero_mp,                            &
-! PR (11 Dec 2015)
-! Add an option to use nonspherical snow grains
-             fs,       aero_mp,   lnonspherical,           &
-                                  avdrl,    avdfl,         &
+             fs,       aero_mp,   avdrl,    avdfl,         &
                                   aidrl,    aidfl,         &
                                   fswsfc,   fswint,        &
                                   fswthru,  Sswabs(:,:,:), &
@@ -1867,12 +1850,7 @@
              icells_DE, indxi_DE, indxj_DE, fnidr, coszen, &
              swvdr,     swvdf,    swidr,    swidf, srftyp, &
              hs,        rhosnw,   rsnw,     hi,    hp,     &
-!            fp,       aero_mp,   avdrl,    avdfl,         &
-! PR (11 Dec 2015)
-! Add an option to use nonspherical snow grains
-! (although this should not matter for bare sea ice)
-             fp,       aero_mp,   lnonspherical,           &
-                                  avdrl,    avdfl,         &
+             fp,       aero_mp,   avdrl,    avdfl,         &
                                   aidrl,    aidfl,         &
                                   fswsfc,   fswint,        &
                                   fswthru,  Sswabs(:,:,:), &
@@ -1970,10 +1948,7 @@
              icells_DE, indxi_DE, indxj_DE, fnidr, coszen, &
              swvdr,     swvdf,    swidr,    swidf, srftyp, &
              hs,        rhosnw,   rsnw,     hi,    hp,     &
-!            fi,       aero_mp,   
-! PR 11 Dec 2015
-             fi,       aero_mp,   lnonspherical,         &
-                                  alvdr,    alvdf,       &
+             fi,       aero_mp,   alvdr,    alvdf,       &
                                   alidr,    alidf,       &
                                   fswsfc,   fswint,      &
                                   fswthru,  Sswabs,      &
@@ -1990,7 +1965,8 @@
 ! update:  8 February 2007
 ! update:  September 2008 added aerosols
 !
-! update:  Dec 2015: option to use non-spherical snow grains (P. Räisänen)
+! update:  Jan 2016: option to use non-spherical snow grains, 
+!          depending on the compiler directive NONSPH_SNOW (P. Räisänen)
 !
 ! !USES:
 !
@@ -2039,9 +2015,6 @@
       real (kind=dbl_kind), dimension (nx_block,ny_block,4*n_aeromx), &
          intent(in) :: &
          aero_mp     ! aerosol mass path in kg/m2
-
-! Add an option to use non-spherical snow grains (PR 11 Dec 2015)
-      logical, intent(in) :: lnonspherical
 
       real (kind=dbl_kind), dimension (nx_block,ny_block), &
          intent(inout) :: &
@@ -2373,6 +2346,9 @@
        1000._dbl_kind, 1100._dbl_kind, 1250._dbl_kind, 1400._dbl_kind, &
        1600._dbl_kind, 1800._dbl_kind, 2000._dbl_kind, 2500._dbl_kind/
 
+
+#ifdef NONSPH_SNOW      
+
 ! PR 11 Dec 2015 / 25 Jan 2016:
 ! Option to use non-spherical snow grains, based on the "Optimized habit
 ! combination" (OHC) in
@@ -2386,8 +2362,6 @@
 !   Effect of snow-grain shape on climate simulations: Sensitivity tests
 !   with the Norwegian Earth System Model (The Cryosphere Discussions, 
 !   submitted)
-
-      IF (lnonspherical) THEN
 
         !snow extinction efficiency (unitless)
         Qs_tab = RESHAPE( (/ &
@@ -2497,9 +2471,9 @@
           0.772579_dbl_kind,  0.786959_dbl_kind,  0.919197_dbl_kind/),&
           (/nspint,nmbrad/) )
 
-      ELSE  ! spherical snow grains
+#else ! spherical snow grains
 
-! To maximize the consistency with the nons-spherical case, the values
+! To maximize the consistency with the non-spherical case, the values
 ! for spheres were recomputed using:
 !  - a lognormal size distribution with sigma_g=1.5
 !  - Warren & Brandt (2008) ice refractive index
@@ -2618,7 +2592,7 @@
           0.891262_dbl_kind,  0.897336_dbl_kind,  0.948470_dbl_kind/),&
           (/nspint,nmbrad/) )
 
-      END IF  ! lnonspherical
+#endif ! NONSPH_SNOW
 
 
       ! ice surface scattering layer (ssl) iops (units of k = /m)
@@ -3330,7 +3304,6 @@
          alvdf(i,j)   = avdf(ij)
          alidr(i,j)   = aidr(ij)
          alidf(i,j)   = aidf(ij)
-!
          fswsfc(i,j)  = fswsfc(i,j)  + fsfc(ij) *fi(i,j)
          fswint(i,j)  = fswint(i,j)  + fint(ij) *fi(i,j)
          fswthru(i,j) = fswthru(i,j) + fthru(ij)*fi(i,j)
