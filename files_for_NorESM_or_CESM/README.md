@@ -21,7 +21,10 @@ A.1) snicar_optics_5bnd_c090915.nc
 This is the default version in SNICAR / CLM4 containing the optical
 properties of spherical snow grains (for 1471 values of effective radius
 ranging from 30 to 1500 µm) and several aerosol species, each defined
-separately for the five shortwave spectral bands in SNICAR.
+separately for the five shortwave spectral bands in SNICAR. This file has
+been created by Mark Flanner, and it was obtained from the CESM public 
+Subversion input data repository, directory
+https://svn-ccsm-inputdata.cgd.ucar.edu/trunk/inputdata/lnd/clm2/snicardata/ .
 
 A.2) snicar_optics_5bnd_spheres_PRaisanen.nc
 --------------------------------------------
@@ -37,7 +40,6 @@ introduced in Räisänen et al. (2015), with spectral averaging handled
 as explained in the Appendis of Räisänen et al. (2017). The aerosol optical 
 properties are unchanged.
 
-
 *******************************************
 B) OPTICAL PROPERTIES OF SNOW OVER SEA ICE
 *******************************************
@@ -47,7 +49,10 @@ Two versions of the CICE4 fortran file "ice_shortwave.F90" are provided.
 B.1) ice_shortwave.F90 
 --------------------------
 This is the original version of "ice_shortwave.F90" in CICE4,
-provided here just for reference. Spherical snow grains are assumed.
+provided here just for reference. Spherical snow grains are assumed. This
+version is from NorESM, but it is (virtually) identical to the CESM1.0 version
+available (e.g.) here:
+http://www.cesm.ucar.edu/models/cesm1.0/cesm/cesmBbrowser/html_code/cice/ice_shortwave.F90.html
 
 B.2) ice_shortwave_PRaisanen.F90
 ------------------------------
