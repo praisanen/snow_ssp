@@ -59,7 +59,7 @@ B.2) ice_shortwave_PRaisanen.F90
 This is a modified version which supports the use of either spherical or 
 non-spherical snow grains, the latter activated with the compiler directive 
 "NONSPH_SNOW". Note that even in the spherical case, the snow single-scattering
-properties (that is, arrays Qs_tab, ws_tab and gs_tab) differ slightly
+properties (that is, the arrays Qs_tab, ws_tab and gs_tab) differ slightly
 from those in the original version, due to differences in assumed
 ice refractive index and spectral averaging technique (see the Appendix
 of Räisänen et al. 2017).
