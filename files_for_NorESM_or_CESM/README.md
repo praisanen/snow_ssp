@@ -2,7 +2,7 @@
 This directory contains files that may be used for testing the effect of
 non-spherical snow grains in the surface albedo calculation in either 
 the Norwegian Earth System Model (NorESM) or in the Community Earth System 
-Model (CESM), or in principle, any ither model employing the SNICAR scheme
+Model (CESM), or in principle, any other model employing the SNICAR scheme
 for snow on land and the CICE4 sea ice model.
 
 The optical properties of non-spherical snow grains are based on the
@@ -68,5 +68,5 @@ Parameterization of single-scattering properties of snow, The Cryosphere, 9,
 1277-1301, doi:10.5194/tc-9-1277-2015.
 
 Räisänen, P., Makkonen. R., Kirkevåg, A. and Debernard, J. B., 2017:
-Effect of snow-grain shape on climate simulations: Sensitivity tests
+Effect of snow grain shape on climate simulations: Sensitivity tests
 with the Norwegian Earth System Model (The Cryosphere Discussions, submitted)
